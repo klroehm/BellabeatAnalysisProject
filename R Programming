@@ -58,6 +58,25 @@ But first, since I want to base some of my analysis on times of day, I want to s
 Then, I used the summary() function to ensure the columns were properly separated
 Now, I do the same formula for the other two datasets.
 After these steps, it's time to start the analysis.
-So, the first question I want to ask is what is the average total steps that is taken each day?
+So, I added some new columns to the dataset; Total Number of Active Minutes, The Percentage of Active Minutes to Sedentary Minutes, Calories Burned per Active Minute, and Percentage of Minutes Asleep VS Time in Bed
+      dailyActivity_merged$TotalMinutesActive <- (dailyActivity_merged$VeryActiveMinutes + dailyActivity_merged$FairlyActiveMinutes + dailyActivity_merged$LightlyActiveMinutes)
+Then, I will use the Summary function to get a better idea the data contained in the datasets
+      summary(dailyActivity_merged)
+Now, I'm going to create some graphs to get a better ideas of trends and relationships. 
+I made some simple graphs in R using the ggplot package and I made more complex graphs in Excel
+      ggplot(data=sleepDay_merged, aes(x=TotalMinutesAsleep, y=TotalTimeInBed)) + 
+      geom_point(color='red') + geom_smooth() + labs(title="Minutes Asleep vs. Time in Bed")
+      
+      hourlySteps_new <- hourlySteps_merged %>%
+      group_by(ActivityTime) %>%
+      drop_na() %>%
+      summarise(mean_total_steps = mean(StepTotal))
+      ggplot(data=hourlySteps_new, aes(x=ActivityTime, y=mean_total_steps)) + geom_histogram(stat = "identity", fill='orange') +
+      theme(axis.text.x = element_text(angle = 90)) +
+      labs(title="Average Total Steps vs. Time of Day")
+ These graphs, along with my insights and marketing suggestions can be viewed on my main project page
+      
+      
+
 
       
