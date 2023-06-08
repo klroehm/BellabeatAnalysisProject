@@ -51,7 +51,13 @@ Then, import all databases needed
        $ Calories                : num [1:940] 1985 1797 1776 1745 1863 ...
        $ date                    : chr [1:940] "04/12/16" "04/13/16" "04/14/16" "04/15/16" ...
 It shows that the ActivityDate column is in the POSIXct (date/time) format, which means the code worked, so I'll add that same formula to the rest of the datasets.
+But first, since I want to base some of my analysis on times of day, I want to separate the Date column into a seperate column for date and a column for time.
+      > sleepDay_merged$SleepDay=as.POSIXct(sleepDay_merged$SleepDay, format="%m/%d/%Y %I:%M:%S %p", tz=Sys.timezone())
+      > sleepDay_merged$time <- format(sleepDay_merged$SleepDay, format = "%H:%M:%S")
+      > sleepDay_merged$date <- format(sleepDay_merged$SleepDay, format = "%m/%d/%y")
+Then, I used the summary() function to ensure the columns were properly separated
+Now, I do the same formula for the other two datasets.
+After these steps, it's time to start the analysis.
+So, the first question I want to ask is what is the average total steps that is taken each day?
+
       
- 
- 
- Then, since I want to base some of my analysis on times of day, I want to separate the date and time column into two seperate columns.
