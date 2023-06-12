@@ -1,0 +1,13 @@
+Bellabeat Analysis Project using SQL
+The first step is counting the number of unique Ids in the dataset.
+  SELECT COUNT(Distinct Id) as Unique_Ids
+  FROM `Fitness.Activity`
+  --This returned a result of 33 unique entrants.
+I wanted to get an idea of what percentage of the time users were very active vs fairly active vs lightly active
+  SELECT (VeryActiveMinutes/TotalActiveMinutes)*100  as Very_Active_Percentage, 
+  (FairlyActiveMinutes/TotalActiveMinutes)*100 as Fairly_Active_Percentage, 
+  (LightlyActiveMinutes/TotalActiveMinutes)*100 as Lightly_Active_Percentage
+  FROM Fitness.Activity
+  WHERE TotalActiveMinutes <> 0
+Then, I wanted to find the average total steps taken per day
+ 
