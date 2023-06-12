@@ -10,4 +10,9 @@ I wanted to get an idea of what percentage of the time users were very active vs
   FROM Fitness.Activity
   WHERE TotalActiveMinutes <> 0
 Then, I wanted to find the average total steps taken per day
- 
+   SELECT AVG(TotalSteps)
+   FROM Fitness.Activity
+Average Total Hours of Sleep per day
+  SELECT AVG(TotalMinutesAsleep)/60 as AverageHoursAsleep
+  FROM Fitness.Sleep
+    
