@@ -15,7 +15,16 @@ I wanted to get an idea of what percentage of the time users were very active vs
 Then, I wanted to find the average total steps taken per day
    SELECT AVG(TotalSteps)
    FROM Fitness.Activity
-   
+  
+Average Distance per day
+    SELECT AVG(Distance)
+    FROM Fitness.Activity
+    
+Total Monthly number of steps by each unique ID number
+  SELECT Id, SUM(TotalSteps) as Total_Monthly_Steps
+  FROM Fitness.Activity
+  GROUP BY Id
+  
 Average Total Hours of Sleep per day
   SELECT AVG(TotalMinutesAsleep)/60 as AverageHoursAsleep
   FROM Fitness.Sleep
