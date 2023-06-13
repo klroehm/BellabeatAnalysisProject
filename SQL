@@ -15,4 +15,7 @@ Then, I wanted to find the average total steps taken per day
 Average Total Hours of Sleep per day
   SELECT AVG(TotalMinutesAsleep)/60 as AverageHoursAsleep
   FROM Fitness.Sleep
-    
+Percent of days that users got over 10,000 steps 
+  SELECT COUNT(*)/940*100
+  FROM Fitness.Activity
+  WHERE TotalSteps >10000
