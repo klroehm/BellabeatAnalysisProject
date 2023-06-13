@@ -46,6 +46,12 @@ Percent of days that users got over 10,000 steps
 Percent of day spent sedentary
   SELECT Id, ActivityDate, (SedentaryMinutes/1440)*100 as percentage_sedentary
   FROM Fitness.Activity
+  
+Comparing Total Steps to Days of the Week
+  SELECT SUM(TotalSTeps), Weekday
+  FROM Fitness.Activity
+  GROUP BY Weekday
+  ORDER BY SUM(TotalSteps) desc
 
 I want to merge the Sleep dataset with the Activity dataset, joined by common ID numbers 
 SELECT f.ActivityDate,f.ID, s.Id, s.TotalMinutesAsleep, f.TotalSteps
