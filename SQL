@@ -1,21 +1,35 @@
 Bellabeat Analysis Project using SQL
+
 The first step is counting the number of unique Ids in the dataset.
   SELECT COUNT(Distinct Id) as Unique_Ids
   FROM `Fitness.Activity`
   --This returned a result of 33 unique entrants.
+  
 I wanted to get an idea of what percentage of the time users were very active vs fairly active vs lightly active
   SELECT (VeryActiveMinutes/TotalActiveMinutes)*100  as Very_Active_Percentage, 
   (FairlyActiveMinutes/TotalActiveMinutes)*100 as Fairly_Active_Percentage, 
   (LightlyActiveMinutes/TotalActiveMinutes)*100 as Lightly_Active_Percentage
   FROM Fitness.Activity
   WHERE TotalActiveMinutes <> 0
+  
 Then, I wanted to find the average total steps taken per day
    SELECT AVG(TotalSteps)
    FROM Fitness.Activity
+   
 Average Total Hours of Sleep per day
   SELECT AVG(TotalMinutesAsleep)/60 as AverageHoursAsleep
   FROM Fitness.Sleep
+  
 Percent of days that users got over 10,000 steps 
   SELECT COUNT(*)/940*100
   FROM Fitness.Activity
   WHERE TotalSteps >10000
+
+I want to merge the Sleep dataset with the Activity dataset, joined by common ID numbers 
+SELECT f.ActivityDate,f.ID, s.Id, s.TotalMinutesAsleep, f.TotalSteps
+FROM Fitness.Activity as f
+LEFT JOIN Fitness.Sleep as s on f.Id = s.Id
+ORDER BY ActivityDate
+
+
+
