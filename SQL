@@ -52,6 +52,11 @@ Comparing Total Steps to Days of the Week
   FROM Fitness.Activity
   GROUP BY Weekday
   ORDER BY SUM(TotalSteps) desc
+  
+Finding Average Weekly Moderately Active Minutes
+  SELECT AVG(VeryActiveMinutes + FairlyActiveMinutes)*7 as Weekly_Moderately_active, Id
+  FROM Fitness.Activity
+  GROUP BY Id
 
 I want to merge the Sleep dataset with the Activity dataset, joined by common ID numbers 
 SELECT f.ActivityDate,f.ID, s.Id, s.TotalMinutesAsleep, f.TotalSteps
