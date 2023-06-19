@@ -11,26 +11,31 @@ For this project, I used the Tidyverse package (This system contains several pac
       library(tidyverse)
       install.packages("janitor")
       library(janitor)
+      
 Then, import all databases needed
       dailyActivity_merged <- read_csv("dailyActivity_merged.csv”)
       hourlySteps_merged <- read_csv("hourlySteps_merged.csv")
       sleepDay_merged <- read_csv("sleepDay_merged.csv")
       hourlyCalories_merged <- read_csv("hourlyCalories_merged.csv") 
+      
  Then, using the janitors package, make all the variable names consistent in one line of code, by leaving only characters and numbers
       clean_names(dailyActivity_merged)
       clean_names(hourlySteps_merged)
       clean_names(sleepDay_merged)
       clean_names(hourlyCalories_merged)
+      
  Next, I want to know the number of users (distinct ID numbers) in each dataset
       n_distinct(dailyActivity_merged$Id)
       n_distinct(hourlySteps_merged$Id)
       n_distinct(sleepDay_merged$Id)
       n_distinct(hourlyCalories_merged$Id)
+      
  All datasets contained 33 unique ID numbers, except the sleepDay_merged dataset only contained 24 unique entrants.
  Generally, I want at least 30 participants to confidently make any decisions, so any conclusions I come to based solely off sleepDay datasets may be less accurate. 
  Now, I want to ensure that the date column in all datasets is in 'date/time' format. 
       dailyActivity_merged$ActivityDate=as.POSIXct(dailyActivity_merged$ActivityDate, format="%m/%d/%Y", tz=Sys.timezone())
       dailyActivity_merged$date <- format(dailyActivity_merged$ActivityDate, format = "%m/%d/%y")
+      
  I can check to make sure this worked, by using the 'str' function, which returns the type of each element in the data
       str(dailyActivity_merged)
       spc_tbl_ [940 × 16] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
@@ -49,19 +54,23 @@ Then, import all databases needed
        $ LightlyActiveMinutes    : num [1:940] 328 217 181 209 221 164 233 264 205 211 ...
        $ SedentaryMinutes        : num [1:940] 728 776 1218 726 773 ...
        $ Calories                : num [1:940] 1985 1797 1776 1745 1863 ...
-       $ date                    : chr [1:940] "04/12/16" "04/13/16" "04/14/16" "04/15/16" ...
+       $ date                    : chr [1:940] "04/12/16" "04/13/16" "04/14/16" "04/15/16" ...      
 It shows that the ActivityDate column is in the POSIXct (date/time) format, which means the code worked, so I'll add that same formula to the rest of the datasets.
+
 But first, since I want to base some of my analysis on times of day, I want to separate the Date column into a seperate column for date and a column for time.
       > sleepDay_merged$SleepDay=as.POSIXct(sleepDay_merged$SleepDay, format="%m/%d/%Y %I:%M:%S %p", tz=Sys.timezone())
       > sleepDay_merged$time <- format(sleepDay_merged$SleepDay, format = "%H:%M:%S")
       > sleepDay_merged$date <- format(sleepDay_merged$SleepDay, format = "%m/%d/%y")
+      
 Then, I used the summary() function to ensure the columns were properly separated
 Now, I do the same formula for the other two datasets.
 After these steps, it's time to start the analysis.
 So, I added some new columns to the dataset; Total Number of Active Minutes, The Percentage of Active Minutes to Sedentary Minutes, Calories Burned per Active Minute, and Percentage of Minutes Asleep VS Time in Bed
       dailyActivity_merged$TotalMinutesActive <- (dailyActivity_merged$VeryActiveMinutes + dailyActivity_merged$FairlyActiveMinutes + dailyActivity_merged$LightlyActiveMinutes)
+      
 Then, I will use the Summary function to get a better idea the data contained in the datasets
       summary(dailyActivity_merged)
+      
 Now, I'm going to create some graphs to get a better ideas of trends and relationships. 
 I made some simple graphs in R using the ggplot package and I made more complex graphs in Excel
       ggplot(data=sleepDay_merged, aes(x=TotalMinutesAsleep, y=TotalTimeInBed)) + 
@@ -74,6 +83,7 @@ I made some simple graphs in R using the ggplot package and I made more complex 
       ggplot(data=hourlySteps_new, aes(x=ActivityTime, y=mean_total_steps)) + geom_histogram(stat = "identity", fill='orange') +
       theme(axis.text.x = element_text(angle = 90)) +
       labs(title="Average Total Steps vs. Time of Day")
+      
  These graphs, along with my insights and marketing suggestions can be viewed on my main project page
       
       
